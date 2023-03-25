@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "username": "nkduy",
+      "password": "!aerix123",
+      "fullName": "Ngo Khanh Duy",
+      "age": "26",
+      "role": 1
+    }
+  ]
+
+}
