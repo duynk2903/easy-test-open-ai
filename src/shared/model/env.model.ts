@@ -1,5 +1,5 @@
 export interface EnvModel {
-  appName: string;
-  port: number | string;
-  apiKey: string;
+  appName: string
+  port: number | string
+  apiKey: string
 }

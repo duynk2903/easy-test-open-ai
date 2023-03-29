@@ -1,3 +1,3 @@
 export enum OpenAIModelType {
-  ANSWER_QUESTION = 'text-davinci-003',
+  ENGINE_003 = 'text-davinci-003'
 }

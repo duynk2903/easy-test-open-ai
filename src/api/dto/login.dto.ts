@@ -1,16 +1,21 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger'
 
+/**
+ * Login dto
+ */
 export class LoginDto {
   @ApiProperty({
     example: 'nkduy',
     description: 'username',
-    required: true,
+    type: String,
+    required: true
   })
-  username: string;
+  username: string
   @ApiProperty({
     example: '!aerix123',
     description: 'password',
-    required: true,
+    type: String,
+    required: true
   })
-  password: string;
+  password: string
 }

@@ -1,3 +1,3 @@
 export interface AnswerQuestionModel {
-  answer: string;
+  answer: string
 }
