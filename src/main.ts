@@ -1,33 +1,32 @@
-import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
-import { FirebaseConfigModel } from './shared/model/firebase.config.model';
-import { buildFireBaseConfigFromConfigService } from './shared/config/firebase.config';
-import { initializeApp } from 'firebase/app';
-import FirebaseHelperInstance from './shared/helpers/firebase.helper';
-import { Configuration, OpenAIApi } from 'openai';
-import OpenAIInstance from './shared/helpers/openai.helper';
+import { NestFactory } from '@nestjs/core'
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
+import { AppModule } from './app.module'
+import { ConfigService } from '@nestjs/config'
+import { FirebaseConfigModel } from './shared/model/firebase.config.model'
+import { buildFireBaseConfigFromConfigService } from './shared/config/firebase.config'
+import { initializeApp } from 'firebase/app'
+import FirebaseHelperInstance from './shared/helpers/firebase.helper'
+import { Configuration, OpenAIApi } from 'openai'
+import OpenAIInstance from './shared/helpers/openai.helper'
 /**
  * Main application
  */
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.enableCors();
-  const configService: ConfigService = app.get(ConfigService);
+  const app = await NestFactory.create(AppModule)
+  app.enableCors()
+  const configService: ConfigService = app.get(ConfigService)
   const configuration = new Configuration({
-    apiKey: configService.get<string>('OPENAI_API_KEY'),
-  });
-  const openai = new OpenAIApi(configuration);
-  OpenAIInstance.setGlobalApi(openai);
+    apiKey: configService.get<string>('OPENAI_API_KEY')
+  })
+  const openai = new OpenAIApi(configuration)
+  OpenAIInstance.setGlobalApi(openai)
 
-  const firebaseConfig: FirebaseConfigModel =
-    buildFireBaseConfigFromConfigService(configService);
+  const firebaseConfig: FirebaseConfigModel = buildFireBaseConfigFromConfigService(configService)
 
-  const firebaseApp = initializeApp(firebaseConfig);
-  const firebaseHelper = FirebaseHelperInstance;
-  firebaseHelper.setFirebaseApplication(firebaseApp);
-  firebaseHelper.setConfiguration(firebaseConfig);
+  const firebaseApp = initializeApp(firebaseConfig)
+  const firebaseHelper = FirebaseHelperInstance
+  firebaseHelper.setFirebaseApplication(firebaseApp)
+  firebaseHelper.setConfiguration(firebaseConfig)
 
   const config = new DocumentBuilder()
     .setTitle('Easy test open API')
@@ -41,14 +40,14 @@ async function bootstrap() {
         bearerFormat: 'JWT',
         name: 'JWT',
         description: 'Enter JWT token',
-        in: 'header',
+        in: 'header'
       },
-      'accessToken',
+      'accessToken'
     )
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+    .build()
+  const document = SwaggerModule.createDocument(app, config)
+  SwaggerModule.setup('api', app, document)
 
-  await app.listen(3000);
+  await app.listen(3000)
 }
-bootstrap();
+bootstrap()
