@@ -6,6 +6,7 @@ import { BaseResponseTranslateModel } from '../../shared/model/translate.model'
 import { CheckGrammarDto } from '../../api/dto/check-grammar.dto'
 import { TranslateTextDto } from '../../api/dto/translate-text.dto'
 import { StringEnum } from '../../shared/enums/common.enum'
+import { TranslateQueryDto } from '../../api/dto/translate-query.dto'
 
 /**
  * Translate service
@@ -49,6 +50,30 @@ export class TranslateService {
         .createCompletion({
           model: OpenAIModelType.ENGINE_003,
           prompt: `Translate this into ${inDto.language}:\\n\\n ${inDto.text}`,
+          temperature: 0,
+          max_tokens: 4000,
+          top_p: 1.0,
+          frequency_penalty: 0.2,
+          presence_penalty: 0.0
+        })
+        .then((response) => response.data.choices[0])
+        .then((data) => Builder<BaseResponseTranslateModel>().text(data.text).build())
+    } catch (err) {
+      return Builder<BaseResponseTranslateModel>().text(StringEnum.ERROR_GENERATE_RESPONSE).build()
+    }
+  }
+
+  /**
+   * Translate text to query SQL
+   * @param dto
+   */
+  async translateTextToQuerySQL(dto: TranslateQueryDto) {
+    const openApi = OpenAIInstance.getOpenAI()
+    try {
+      return await openApi
+        .createCompletion({
+          model: OpenAIModelType.ENGINE_003,
+          prompt: dto.text,
           temperature: 0,
           max_tokens: 4000,
           top_p: 1.0,

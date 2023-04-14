@@ -10,7 +10,7 @@ const ENV = process.env.NODE_ENV
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
+      envFilePath: !ENV ? '.env.development' : `.env.production`,
       load: [envConfig],
       isGlobal: true
     }),

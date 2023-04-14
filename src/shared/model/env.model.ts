@@ -1,5 +1,12 @@
 export interface EnvModel {
-  appName: string
-  port: number | string
-  apiKey: string
+  OPEN_AI_APP_NAME: string
+  OPEN_AI_PORT: number | string
+  OPEN_AI_FIREBASE_API_KEY: string
+  OPEN_AI_FIREBASE_AUTH_DOMAIN: string
+  OPEN_AI_FIREBASE_PROJECT_ID: string
+  OPEN_AI_FIREBASE_STORAGE_BUCKET: string
+  OPEN_AI_FIREBASE_MESSAGING_SENDER_ID: string
+  OPEN_AI_FIREBASE_APP_ID: string
+  OPEN_AI_FIREBASE_MEASUREMENT_ID: string
+  OPENAI_API_KEY: string
 }

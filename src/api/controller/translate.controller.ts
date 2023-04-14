@@ -17,6 +17,7 @@ import { SwaggerResponseStatusDescription } from '../../shared/enums/swagger.enu
 import { TranslateTextDto } from '../dto/translate-text.dto'
 import { GuardEnum } from '../../shared/enums/guard.enum'
 import { AuthorizationEnum } from '../../shared/enums/common.enum'
+import { TranslateQueryDto } from '../dto/translate-query.dto'
 
 /**
  * Translate controller
@@ -87,5 +88,32 @@ export class TranslateController {
   @Post('/translateToAnotherLanguage')
   async translateTextToAnotherLanguage(@Body() inDto: TranslateTextDto) {
     return this.translateService.translateTextToAnotherLanguage(inDto)
+  }
+
+  /**
+   * Translate text to SQL query
+   * @param inDto
+   */
+  @ApiOperation({
+    summary: 'SQL request.',
+    description: `Create simple SQL queries by text`
+  })
+  @ApiOkResponse({ description: SwaggerResponseStatusDescription.OK_RESPONSE })
+  @ApiBadRequestResponse({
+    description: SwaggerResponseStatusDescription.BAD_REQUEST
+  })
+  @ApiUnauthorizedResponse({
+    description: SwaggerResponseStatusDescription.UN_AUTHORIZATION_REQUEST
+  })
+  @ApiForbiddenResponse({
+    description: SwaggerResponseStatusDescription.FORBIDDEN_REQUEST
+  })
+  @ApiInternalServerErrorResponse({
+    description: SwaggerResponseStatusDescription.INTERNAL_SERVER_ERROR
+  })
+  @HttpCode(200)
+  @Post('/translateTextToSQLQuery')
+  async translateTextToSQLQuery(@Body() inDto: TranslateQueryDto) {
+    return this.translateService.translateTextToQuerySQL(inDto)
   }
 }
